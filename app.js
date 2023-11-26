@@ -48,15 +48,23 @@ firebase.database().ref('todo-data').on('child_added',function(data){
 function add(){
     
     var input = document.getElementById('input');
-    var database = firebase.database().ref('todo-data');
-    var key = database.push().key;
-    var obj = {
-      value:input.value,
-      key:key
-      
+    var normal = input.value.replace(/\s+/g, ' ');
+    if(normal !== "" && normal !==" "){
+
+      var database = firebase.database().ref('todo-data');
+      var key = database.push().key;
+      var obj = {
+        value:input.value,
+        key:key
+        
+      }
+      database.child(key).set(obj)
     }
-    database.child(key).set(obj)
-    
+    else{
+      alert("Enter Value");
+      input.value = "";
+    }
+      
 }
 
 function delall(){
